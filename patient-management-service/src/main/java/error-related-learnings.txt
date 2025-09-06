@@ -1,0 +1,2 @@
+Flyway with postgres shows database version not supported but in specific dependency order it works.
+We can use explicit version to resolve this issue.

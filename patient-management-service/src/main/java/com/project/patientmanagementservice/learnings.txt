@@ -1,0 +1,3 @@
+data.sql
+data.sql will run everytime on application startup. Although it is useful for development but it will lead to duplicate
+entries better way is to add sample data in a migration script and activate the script only for dev environment.
