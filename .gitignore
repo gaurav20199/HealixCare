@@ -1,12 +1,6 @@
 HELP.md
-./patient-management-service/target/
-./patient-management-service/.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-./patient-management-service/.gitattributes
-./patient-management-service/.mvn/
-./patient-management-service/mvnw
-./patient-management-service/mvnw.cmd
 .env
 
 ### STS ###
