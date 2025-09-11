@@ -1,11 +1,11 @@
 ### Request to update patient
-PUT http://localhost:8080/patients/123e4567-e89b-12d3-a456-426614174000
+PUT http://localhost:8080/patients/0b49a1f7-b928-4235-8069-4a0e55711101
 Content-Type: application/json
 
 {
   "name": "updated-patient",
-  "email": "updated_email@gmail.com",
-  "address": "123 Main Street",
+  "email": "demo@gmail.com",
+  "address": "address from api",
   "dateOfBirth": "1995-09-09"
 }
 
