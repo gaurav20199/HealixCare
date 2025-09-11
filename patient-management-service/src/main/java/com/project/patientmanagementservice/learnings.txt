@@ -1,3 +1,11 @@
 data.sql
 data.sql will run everytime on application startup. Although it is useful for development but it will lead to duplicate
 entries better way is to add sample data in a migration script and activate the script only for dev environment.
+
+Validation Groups
+This is a concept where we provide constraints that will help us to recognize which specific fields need to be validated
+depending upon whether it is a post request or a put request.
+
+@Validated-> Using this annotation, we can use validation groups.
+Complex scenarios, where you want different validation logic for different operations (create, update, partial update,
+etc)— you can mark certain fields mandatory only in some cases.
