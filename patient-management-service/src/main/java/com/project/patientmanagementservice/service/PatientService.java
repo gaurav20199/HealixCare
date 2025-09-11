@@ -9,12 +9,15 @@ import com.project.patientmanagementservice.repository.PatientRepository;
 import com.project.patientmanagementservice.utils.PatientDTOMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly=true)
 public class PatientService {
 
     private final PatientRepository patientRepository;
@@ -25,6 +28,7 @@ public class PatientService {
         return patients.stream().map(patientDTOMapper::toDto).toList();
     }
 
+    @Transactional
     public PatientResponseDTO createPatient(PatientRequestDTO patientRequestDTO) {
         if(patientRepository.existsByEmail(patientRequestDTO.getEmail()))
             throw new InvalidEmailException("Invalid email id provided");
@@ -34,6 +38,7 @@ public class PatientService {
         return patientDTOMapper.toDto(patient);
     }
 
+    @Transactional
     public PatientResponseDTO updatePatient(UUID uuid,
                                             PatientRequestDTO patientRequestDTO) {
 
@@ -53,6 +58,11 @@ public class PatientService {
 
         Patient updatedPatient = patientRepository.save(patient);
         return patientDTOMapper.toDto(updatedPatient);
+    }
+
+    @Transactional
+    public void deletePatient(UUID uuid) {
+        patientRepository.deleteByUuid(uuid);
     }
 
 }

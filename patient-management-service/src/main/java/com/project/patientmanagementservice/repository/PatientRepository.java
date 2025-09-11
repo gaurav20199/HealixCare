@@ -7,8 +7,8 @@ import java.util.UUID;
 
 public interface PatientRepository extends JpaRepository<Patient,Integer> {
     boolean existsByEmail(String email);
-
     boolean existsByEmailAndUuidNot(String email, UUID uuid);
-
     Optional<Patient> findByUuid(UUID uuid);
+    void deleteByUuid(UUID uuid);
+
 }
