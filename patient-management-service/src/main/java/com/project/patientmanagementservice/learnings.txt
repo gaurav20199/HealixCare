@@ -9,3 +9,37 @@ depending upon whether it is a post request or a put request.
 @Validated-> Using this annotation, we can use validation groups.
 Complex scenarios, where you want different validation logic for different operations (create, update, partial update,
 etc)— you can mark certain fields mandatory only in some cases.
+
+What does Docker solves??
+In Prod environment, we might be using alot of tools like db, redis, proxy. One way is to install all these tools one by
+one either manually or through scripts which is tedious and time consuming.
+Other issue is that we might end up installing other versions of these tools and there will be difference in prod and
+dev environment.
+Docker helps in containerizing all the tools, configs, code and other necessary dependencies that we require within a
+docker environment.
+So Docker makes sure, if the docker container works in mac/windows then the same docker container will also work in any
+cloud like GCP.
+
+How does Docker work??
+1) In our project we usually have our code, runtime(that support program's execution), configs and dependencies.
+We can bundle all these into a Docker image
+
+Docker Image
+A Docker image is a standalone, executable package that includes everything needed to run an application: your app’s
+code, runtime, system tools, libraries, and settings.
+It is like a blueprint or template for creating containers.
+
+2) Once Docker image is created we can push it to Docker image repository(cloud or local). This is where Docker images
+are stored, managed and Distributed. Eg: DockerHub
+
+3) Using the Docker image repository, we can pull the image anywhere and can use the image to start our docker container
+and this container can run anywhere docker is installed.
+
+
+Error faced during Docker setup
+1) Flyway takes initial connection and got timezone issue. Initial value was going as Asia/Calcutta to Flyway from some
+reason. On setting the timezone from JVM Arguments, the issue was resolved.
+2) If application.properties doesn't provide server.port then it will be taken as 8080. App will start on this port
+inside docker container. If you will provide wrong binding like 8000:8000 then host will take the request on 8080 port
+docker will accept the request on 8000 port. it will try to see if any process is running on 8000 port inside container
+It won't find it as our spring boot app is running on 8080 port and it will cause issues.
