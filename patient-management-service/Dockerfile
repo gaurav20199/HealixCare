@@ -12,8 +12,7 @@ COPY src ./src
 
 RUN mvn clean package -Dmaven.test.skip=true
 
-
-FROM openjdk:24-jdk AS runner
+FROM eclipse-temurin:24-jdk AS runner
 
 WORKDIR /app
 

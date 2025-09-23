@@ -43,3 +43,35 @@ reason. On setting the timezone from JVM Arguments, the issue was resolved.
 inside docker container. If you will provide wrong binding like 8000:8000 then host will take the request on 8080 port
 docker will accept the request on 8000 port. it will try to see if any process is running on 8000 port inside container
 It won't find it as our spring boot app is running on 8080 port and it will cause issues.
+
+
+Kafka usecase in the project
+Suppose whenever patient gets created, we might need other services to Know about it. Those services can be for eg:
+analytics service, notification service(that might trigger an email to verify email address) and other services.
+Now one way is to process it synchronously like once patient is saved, make a call to analytics service and then to
+notification service, just like we did a synchronous call to Billing Service.
+Problem with this approach is that we have to make calls to multiple services and this causes things to slow down as
+in real world scenario, every second there can be thousands of new patient created and for each patient we are calling
+multiple services and hence there be thousands of service to service internal calls and even more per second which can
+cause things to slow down tremendously.
+Other drawback is that since all of this is blocking call so if suppose analytics service is slow or not available
+it can bottleneck the entire system.
+
+Solution: Asynchronous Communication
+Patient Service can publish an event to Kafka and then all the services interested in that event can consume it.
+This way Patient Service is not waiting for other services for response. Other services can consume the event as per
+their convenience.
+
+Kafka Terminologies
+1) Kafka Broker: A single Kafka server is called a Kafka Broker. That Kafka broker is a program that runs on the Java
+Virtual Machine (Java version 11+ for latest kafka version) and usually a server that is meant to be a Kafka broker will
+solely run the necessary program and nothing else.
+There can be multiple Kafka Brokers so that if one Broker is down whole system doesn't go down.
+
+2) Kafka Topic: A Kafka topic is a named category within a Kafka cluster where records (events/messages) are stored.
+Producers write messages to topics, and consumers read messages from topics. There can be multiple Kafka Topics within
+a Kafka Broker
+
+3) Partitions: Each topic is internally divided into partitions for scalability and parallelism.
+
+4) Kafka Event: These are stored inside Kafka Topic. This can be in JSON/Protobuf or custom format as rquired.
