@@ -67,11 +67,36 @@ Kafka Terminologies
 Virtual Machine (Java version 11+ for latest kafka version) and usually a server that is meant to be a Kafka broker will
 solely run the necessary program and nothing else.
 There can be multiple Kafka Brokers so that if one Broker is down whole system doesn't go down.
+Brokers are identified by unique IDs (e.g., broker 0, broker 1, broker 2).
 
-2) Kafka Topic: A Kafka topic is a named category within a Kafka cluster where records (events/messages) are stored.
+2) Kafka Cluster: A kafka cluster consists of multiple Kafka Brokers each running on different servers or containers.
+
+3) Controller Broker: The controller broker is responsible for managing and administrative operations. It is important
+for cluster coordination. It is responsible for operations like:
+3.1) Creating/deleting topics
+3.2) Adding partitions
+3.3) Assigning leaders for partitions
+3.4) Monitoring broker failures
+3.5) Coordinating partition leader elections
+
+4) Kafka Topic: A Kafka topic is a named category within a Kafka cluster where records (events/messages) are stored.
 Producers write messages to topics, and consumers read messages from topics. There can be multiple Kafka Topics within
 a Kafka Broker
 
-3) Partitions: Each topic is internally divided into partitions for scalability and parallelism.
+5) Partitions: Each topic is internally divided into partitions for scalability and parallelism.
 
-4) Kafka Event: These are stored inside Kafka Topic. This can be in JSON/Protobuf or custom format as rquired.
+6) Kafka Event: These are stored inside Kafka Topic. This can be in JSON/Protobuf or custom format as required.
+
+7) Internal and External Ports
+7.1) External Ports (Client Communication)
+These ports are used for communication between Kafka clients (producers, consumers, etc.) and the Kafka brokers
+(the servers that run Kafka).
+7.2) 
+
+
+Setting up Kafka
+1) Kafka Broker-> We can easily setup using Docker. Get the Docker image for Kafka
+
+
+Checking environment variables inside docker
+docker exec -it patient-service sh -c "printenv"
