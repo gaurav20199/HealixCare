@@ -1,0 +1,33 @@
+server:
+  port: 4003
+
+spring:
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: patient-service-route
+              uri: http://patient-service:8080
+              predicates:
+                - Path=/api/patients/**
+                - Path=/api/patients
+              filters:
+                - StripPrefix=1
+
+            - id: patient-service-api-docs
+              uri: http://patient-service:8000
+              predicates:
+                - Path=/api-docs/patients
+              filters:
+                - RewritePath=/api-docs/patients,/v3/api-docs
+
+#Rest client send request http://localhost:4003/api/patients -> since api gateway is running at 4003 port.
+#Api Gateway will check the predicate is used as /api/patients so it will pick the patient-service route
+#and map it into http://patient-service:8000 first then it will check the filters we have StripPrefix set as 1 so it will
+#strip the first prefix after the port in the actual request.
+#Actual request was http://localhost:4003/api/patients. After stripping-> http://localhost:4003/patients
+#Combining both. Request will be: http://patient-service:8000/patients
+
+#2nd Example: From Rest Client http://localhost:4003/api-docs/patients
+#Request after api gateway transformation: http://patient-service:8080/v3/api-docs

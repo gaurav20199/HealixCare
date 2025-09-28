@@ -1,0 +1,43 @@
+An API Gateway is a single entry point into a system (typically a set of microservices or backend APIs).
+It acts as a reverse proxy that:
+Accepts incoming requests from clients
+Routes them to the appropriate backend service
+Applies cross-cutting concerns like:
+Authentication / Authorization
+Logging
+Rate limiting
+Retry / Circuit breaking
+Caching
+Header manipulation
+
+Typical Flow:
+Client → API Gateway → Microservice A
+                         ↓
+                     Microservice B
+
+UseCases of Api Gateway
+
+| Reason                    | Explanation                                        |
+| ------------------------- | -------------------------------------------------- |
+| 🔐 Centralized Security   | Handle auth (JWT, OAuth2) in one place             |
+| ⚙️ Simplified Client Code | Clients don't need to know about internal services |
+| 📦 Aggregation            | Combine responses from multiple services           |
+| 🚀 Performance            | Cache responses, offload heavy processing          |
+| 🛡️ Resilience            | Apply rate limiting, circuit breakers, retries     |
+| 🔄 Flexibility            | Route to different services/environments easily    |
+
+API Gateway vs Reverse Proxy
+
+| Feature             | API Gateway                                  | Reverse Proxy (e.g., Nginx) |
+| ------------------- | -------------------------------------------- | --------------------------- |
+| Intelligent Routing | ✅ Yes (path, header, auth-based)             | ❌ Basic routing             |
+| Authentication      | ✅ Built-in support (JWT, OAuth2)             | ❌ Needs scripting/plugins   |
+| Rate Limiting       | ✅ Out-of-the-box                             | ❌ Requires extensions       |
+| Service Discovery   | ✅ Integration with registry (Eureka, Consul) | ❌ Static config only        |
+| Load Balancing      | ✅ Dynamic                                    | ✅ Static or DNS-based       |
+| Protocols           | HTTP/WebSocket                               | HTTP/HTTPS                    |
+
+Spring Gateway has two types:
+1) Reactive -> Async, Non Blocking Model.
+2) MVC(Non Reactive) -> Blocking Model, Thread per request.
+
