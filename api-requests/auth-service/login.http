@@ -1,0 +1,11 @@
+### POST request to create patient
+POST http://localhost:4034/auth/login
+Content-Type: application/json
+
+{
+  "userName": "test_user1",
+  "email": "testuser@test.com",
+  "password": "password123"
+}
+
+> {% client.global.set("token", response.body.token) %}
