@@ -12,6 +12,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import com.project.authservice.util.JwtUtil;
 
+import java.util.Optional;
+
 @Slf4j
 @Service
 @AllArgsConstructor
@@ -20,7 +22,7 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
 
-    public LoginResponseDTO login(LoginRequestDTO loginRequestDTO) {
+    public Optional<String> login(LoginRequestDTO loginRequestDTO) {
         try {
             //authenticating user by their credential first
             Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequestDTO.userName(), loginRequestDTO.password()));
@@ -28,10 +30,10 @@ public class AuthService {
             // If authenticated then generating token for them on login request.
             SecurityUser user = (SecurityUser) authenticate.getPrincipal();
             log.info("User {} logged in", user.getUsername());
-            return new LoginResponseDTO(jwtUtil.generateAccessToken(user));
+            return Optional.of(jwtUtil.generateAccessToken(user));
         }catch (Exception e){
             log.error("Error occurred"+e.getMessage(),e);
-            return new LoginResponseDTO("");
+            return Optional.empty();
         }
     }
 

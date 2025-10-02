@@ -25,8 +25,8 @@ public class AuthController {
   public ResponseEntity<LoginResponseDTO> login(
       @RequestBody LoginRequestDTO loginRequestDTO) {
     log.info("Login request received {} {} {}",loginRequestDTO.userName(),loginRequestDTO.password(),loginRequestDTO.email());
-    LoginResponseDTO responseDTO = authService.login(loginRequestDTO);
-    return ResponseEntity.ok(responseDTO);
+    Optional<String> tokenOptionalObj = authService.login(loginRequestDTO);
+    return tokenOptionalObj.map(s -> ResponseEntity.ok(new LoginResponseDTO(s))).orElseGet(() -> new ResponseEntity<>(HttpStatus.UNAUTHORIZED));
   }
 
   @Operation(summary = "Validate Token")
