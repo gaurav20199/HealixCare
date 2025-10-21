@@ -2,6 +2,7 @@ package com.project.authservice.security.config;
 
 import com.project.authservice.repository.UserRepository;
 import com.project.authservice.security.usermanagement.SecurityAuthority;
+import com.project.authservice.util.constants.AppConstants;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -33,13 +34,13 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         try {
             log.info("incoming request: {}", request.getRequestURI());
 
-            final String requestTokenHeader = request.getHeader("Authorization");
-            if (requestTokenHeader == null || !requestTokenHeader.startsWith("Bearer")) {
+            final String requestTokenHeader = request.getHeader(AppConstants.AUTH_HEADER_NAME);
+            if (requestTokenHeader == null || !requestTokenHeader.startsWith(AppConstants.BEARER)) {
                 filterChain.doFilter(request, response);
                 return;
             }
 
-            String []tokenArr = requestTokenHeader.split("Bearer ");
+            String []tokenArr = requestTokenHeader.split(AppConstants.BEARER);
             if(tokenArr.length!=2){
                 filterChain.doFilter(request,response);
                 return;

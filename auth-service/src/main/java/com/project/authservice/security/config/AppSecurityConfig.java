@@ -32,7 +32,7 @@ public class AppSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth.
-                        requestMatchers("/auth/*").permitAll().
+                        requestMatchers("/auth/**").permitAll().
                         anyRequest().authenticated()
                 )
                 // can be added if filters are being used to verify the token

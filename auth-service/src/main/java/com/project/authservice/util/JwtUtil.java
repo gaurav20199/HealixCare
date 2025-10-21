@@ -1,6 +1,7 @@
 package com.project.authservice.util;
 
 import com.project.authservice.security.usermanagement.SecurityUser;
+import com.project.authservice.util.constants.AppConstants;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
@@ -29,16 +30,14 @@ public class JwtUtil {
     }
 
     public String generateAccessToken(SecurityUser user) {
-        log.info("Reached here");
         String token = Jwts.builder()
                 .subject(user.getUsername())
-                .claim("role", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(",")))
+                .claim(AppConstants.ROLE, user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(",")))
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + 10*60*1000)) // 10 mins
                 .signWith(getSecretKey())
                 .compact();
 
-        log.info("Generated access token {} {}",token,user.getUsername());
         return token;
 
     }
