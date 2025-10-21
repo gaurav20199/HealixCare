@@ -1,0 +1,36 @@
+server:
+  port: 4003
+
+spring:
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: patient-service-route
+              uri: http://host.docker.internal:8080
+              predicates:
+                - Path=/api/patients/**
+                - Path=/api/patients
+              filters:
+                - StripPrefix=1
+                - JwtValidation
+
+            - id: auth-service-route
+              uri: http://host.docker.internal:4004
+              predicates:
+                - Path=/auth/**
+
+            - id: patient-service-api-docs
+              uri: http://host.docker.internal:8080
+              predicates:
+                - Path=/api-docs/patients,/api-docs/patients/
+              filters:
+                - RewritePath=/api-docs/patients/?$, /v3/api-docs
+
+            - id: auth-service-api-docs
+              uri: http://host.docker.internal:4004
+              predicates:
+                - Path=/api-docs/auth,/api-docs/auth/
+              filters:
+                - RewritePath=/api-docs/auth/?$, /v3/api-docs
