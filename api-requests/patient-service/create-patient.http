@@ -1,6 +1,7 @@
 ### POST request to create patient
 POST http://localhost:8080/patients
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
   "name": "account-notification-test6",

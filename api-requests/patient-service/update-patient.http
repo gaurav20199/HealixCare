@@ -1,6 +1,7 @@
 ### Request to update patient
 PUT http://localhost:8080/patients/0b49a1f7-b928-4235-8069-4a0e55711101
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
   "name": "updated-patient",
