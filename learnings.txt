@@ -100,3 +100,8 @@ Setting up Kafka
 
 Checking environment variables inside docker
 docker exec -it patient-service sh -c "printenv"
+
+Pagination in Spring Data JPA
+1) It works on 0 based indexing. In real life, page will start from 1. So Request and Response Handling is required.
+2) If sort is applied then sort will take precedence i.e first the records from db will be sorted and then
+offset and limit(page and size) will be applied on the sorted results.
