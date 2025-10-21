@@ -11,6 +11,9 @@ import com.project.patientmanagementservice.kafka.PatientEventProducer;
 import com.project.patientmanagementservice.repository.PatientRepository;
 import com.project.patientmanagementservice.utils.PatientDTOMapper;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -18,15 +21,14 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.UUID;
-import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly=true)
 public class PatientService {
 
+    private static final Logger log = LoggerFactory.getLogger(PatientService.class);
     private final PatientRepository patientRepository;
     private final PatientDTOMapper patientDTOMapper;
     private final BillingServiceGrpcClient billingServiceGrpcClient;
@@ -38,7 +40,20 @@ public class PatientService {
                 Sort.Direction.DESC:Sort.Direction.ASC, "id"));
     }
 
+    // telling spring that we want to cache the result
+    @Cacheable(
+            value = "patients",
+            key = "#page+'-'+#size+'-'+#sortDirection"                       //cache key
+    )
     public PageResult<PatientResponseDTO> getAllPatients(int page, int size, String sortDirection) {
+        log.info("Cache miss. Records will be fetched from DB");
+        // simulating api is slow to test cache impact
+        try{
+            Thread.sleep(3000);
+        }catch (InterruptedException e){
+            log.error("Interrupted while waiting for records to be fetched from DB");
+        }
+
         Pageable pageableObj = getPageableObj(page, size, sortDirection);
         Page<PatientResponseDTO> patients = patientRepository.findAll(pageableObj).map(patientDTOMapper::toDto);
         return PageResult.from(patients);

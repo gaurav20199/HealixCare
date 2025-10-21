@@ -105,3 +105,15 @@ Pagination in Spring Data JPA
 1) It works on 0 based indexing. In real life, page will start from 1. So Request and Response Handling is required.
 2) If sort is applied then sort will take precedence i.e first the records from db will be sorted and then
 offset and limit(page and size) will be applied on the sorted results.
+
+Caching Data through Redis
+Why we are caching Get API(s)
+1) Get API(s) have to read alot of data from the database. To avoid frequent db queries, we can cache it.
+2) The Get API(s) will mostly have static data(close to static data) so we should be okay with caching that data
+with appropriate cache expiry time.
+
+Redis will store the data in Key and Value format
+What should be the Key??
+Key should be unique so we can use url params to form a unique key and use it for saving data.
+For eg: patients::page=1&size=5&sort=desc
+Value in our case will be json as we are already using json to share patient response.
