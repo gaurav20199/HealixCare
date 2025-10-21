@@ -1,11 +1,11 @@
 ### POST request to create patient
-POST http://localhost:8080/patients
+POST http://localhost:4003/api/patients
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "name": "account-notification-test6",
-  "email": "account-notification6@gmail.com",
+  "name": "circuit-breaker-test3",
+  "email": "circuit-breaker-test3@gmail.com",
   "address": "123 Main Street",
   "dateOfBirth": "1995-09-09",
   "registeredDate": "2025-09-09" 

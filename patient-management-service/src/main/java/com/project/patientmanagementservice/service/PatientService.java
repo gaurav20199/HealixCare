@@ -7,7 +7,7 @@ import com.project.patientmanagementservice.entity.Patient;
 import com.project.patientmanagementservice.exception.InvalidEmailException;
 import com.project.patientmanagementservice.exception.PatientNotFoundException;
 import com.project.patientmanagementservice.grpc.BillingServiceGrpcClient;
-import com.project.patientmanagementservice.kafka.PatientEventProducer;
+import com.project.patientmanagementservice.kafka.KafkaEventProducer;
 import com.project.patientmanagementservice.repository.PatientRepository;
 import com.project.patientmanagementservice.utils.PatientDTOMapper;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +32,7 @@ public class PatientService {
     private final PatientRepository patientRepository;
     private final PatientDTOMapper patientDTOMapper;
     private final BillingServiceGrpcClient billingServiceGrpcClient;
-    private final PatientEventProducer patientEventProducer;
+    private final KafkaEventProducer kafkaEventProducer;
 
     private Pageable getPageableObj(int pageNumber, int pageSize, String sortDirection) {
         pageNumber = pageNumber>1?pageNumber-1:0;
@@ -69,7 +69,7 @@ public class PatientService {
 
         billingServiceGrpcClient.createBillingAccount(patient.getUuid().toString(), patient.getName(), patient.getEmail());
 
-        patientEventProducer.sendEvent(patient);
+        kafkaEventProducer.sendEvent(patient);
 
         return patientDTOMapper.toDto(patient);
     }

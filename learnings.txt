@@ -117,3 +117,20 @@ What should be the Key??
 Key should be unique so we can use url params to form a unique key and use it for saving data.
 For eg: patients::page=1&size=5&sort=desc
 Value in our case will be json as we are already using json to share patient response.
+
+Rate Limiting
+This helps in restricting user/client to only make a certain number of calls to a service within a time period.
+This can be applied on basis of IP Address, user, API Key or Route etc.
+This prevents system and resources from being overwhelmed and prevents resources abuse.
+
+Circuit Breaker
+Protects the system from cascading failures by cutting off calls to failing services.
+Avoids wasting resources on repeated failed calls and allows the system some time to recover gracefully.
+With a fallback mechanism, retries and timeout strategies we can implement circuit breaker.
+
+In our project, patient service after creation of patient account, creates a billing account. If billing service
+is down then it can cause issue in patient service too hence we can apply circuit breaker concept when we call
+our billing service api(s).
+Fallback should have similar method signature and should have similar Response as original method response. This
+helps the client(who is calling the billing service) to not know whether fallback method is triggered or the original
+method has been triggered so client don't have to do any special handling for fallback method.
