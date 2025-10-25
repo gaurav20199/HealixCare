@@ -46,8 +46,7 @@ public class PatientService {
             key = "#page+'-'+#size+'-'+#sortDirection"                       //cache key
     )
     public PageResult<PatientResponseDTO> getAllPatients(int page, int size, String sortDirection) {
-        log.info("Cache miss. Records will be fetched from DB");
-        // simulating api is slow to test cache impact
+          // simulating api is slow to test cache impact
 //        try{
 //            Thread.sleep(3000);
 //        }catch (InterruptedException e){
