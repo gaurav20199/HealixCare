@@ -32,7 +32,7 @@ public class AuthService {
             log.info("User {} logged in", user.getUsername());
             return Optional.of(jwtUtil.generateAccessToken(user));
         }catch (Exception e){
-            log.error("Error occurred"+e.getMessage(),e);
+            log.error("Error occurred{}", e.getMessage(), e);
             return Optional.empty();
         }
     }

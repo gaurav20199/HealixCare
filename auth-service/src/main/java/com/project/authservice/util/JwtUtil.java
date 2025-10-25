@@ -30,16 +30,13 @@ public class JwtUtil {
     }
 
     public String generateAccessToken(SecurityUser user) {
-        String token = Jwts.builder()
+        return Jwts.builder()
                 .subject(user.getUsername())
                 .claim(AppConstants.ROLE, user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(",")))
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + 10*60*1000)) // 10 mins
                 .signWith(getSecretKey())
                 .compact();
-
-        return token;
-
     }
 
     public String getUsernameFromToken(String token) {
