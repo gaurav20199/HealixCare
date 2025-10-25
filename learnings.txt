@@ -134,3 +134,9 @@ our billing service api(s).
 Fallback should have similar method signature and should have similar Response as original method response. This
 helps the client(who is calling the billing service) to not know whether fallback method is triggered or the original
 method has been triggered so client don't have to do any special handling for fallback method.
+
+Observability
+It helps us understand what's happening inside our system through metrics, logs and traces.
+Spring Boot Actuator will expose build in prod ready endpoints for health checks and metrics.
+Prometheus collects this metrics and store it as time series metrics, giving real time insight.
+Grafana provides dashboards and visualization using the raw metrics collected through Prometheus.

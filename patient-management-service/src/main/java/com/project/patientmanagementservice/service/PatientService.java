@@ -48,11 +48,11 @@ public class PatientService {
     public PageResult<PatientResponseDTO> getAllPatients(int page, int size, String sortDirection) {
         log.info("Cache miss. Records will be fetched from DB");
         // simulating api is slow to test cache impact
-        try{
-            Thread.sleep(3000);
-        }catch (InterruptedException e){
-            log.error("Interrupted while waiting for records to be fetched from DB");
-        }
+//        try{
+//            Thread.sleep(3000);
+//        }catch (InterruptedException e){
+//            log.error("Interrupted while waiting for records to be fetched from DB");
+//        }
 
         Pageable pageableObj = getPageableObj(page, size, sortDirection);
         Page<PatientResponseDTO> patients = patientRepository.findAll(pageableObj).map(patientDTOMapper::toDto);
