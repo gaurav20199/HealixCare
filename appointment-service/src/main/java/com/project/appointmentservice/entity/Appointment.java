@@ -7,11 +7,16 @@ import jakarta.persistence.Version;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
 @Table(name = "appointment")
+@Getter
+@Setter
 public class Appointment extends BaseEntity {
 
     @Column(nullable = false, unique = true, updatable = false)

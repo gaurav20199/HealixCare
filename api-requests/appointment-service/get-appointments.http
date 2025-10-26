@@ -1,0 +1,2 @@
+### GET request to get all the patients
+GET http://localhost:4005/appointments?from=2025-10-27T00:00:00&to=2025-10-31T12:00:00
