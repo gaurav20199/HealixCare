@@ -140,3 +140,15 @@ It helps us understand what's happening inside our system through metrics, logs 
 Spring Boot Actuator will expose build in prod ready endpoints for health checks and metrics.
 Prometheus collects this metrics and store it as time series metrics, giving real time insight.
 Grafana provides dashboards and visualization using the raw metrics collected through Prometheus.
+
+CQRS(Command Query Read Segregation)
+Pattern implies that we should split our reads(query) and writes(commands) in separate models.
+How it will be used in our project??
+We have appointment service and patient service. Appointment service would also have to store the patient info as it
+requires necessary info about the patient.
+Ownership of Patient entity will lie with Patient Service but there will be a copy of patient entity inside appointment
+service as well. Copy will be used for reading the data.
+
+How data will be made consistent for Patient entity between the two service??
+Whenever there will be any change in patient data, event will be shared through Kafka for it..Appointment service will
+be subscribing for patient topic and will do the update according to that in their db.
