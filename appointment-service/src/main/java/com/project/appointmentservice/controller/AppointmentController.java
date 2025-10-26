@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("/appointments")
+@RequestMapping({"/appointments","/appointments/"})
 public class AppointmentController {
 
   private final AppointmentService appointmentService;
