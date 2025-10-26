@@ -1,6 +1,10 @@
 server:
   port: 4003
 
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+
 spring:
   data:
     redis:
@@ -21,8 +25,7 @@ spring:
             - id: patient-service-route
               uri: http://patient-service:8080
               predicates:
-                - Path=/api/patients/**
-                - Path=/api/patients
+                - Path=/api/patients,/api/patients/**
               filters:
                 - StripPrefix=1
                 - JwtValidation
