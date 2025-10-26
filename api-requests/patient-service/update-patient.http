@@ -1,13 +1,13 @@
 ### Request to update patient
-PUT http://localhost:8080/patients/0b49a1f7-b928-4235-8069-4a0e55711101
+PUT http://localhost:4000/patients/c6a36342-180d-496f-b3e8-5beb5511f0a3
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "name": "updated-patient",
-  "email": "demo@gmail.com",
+  "name": "updated-patient-for-appointment2",
+  "email": "updatedPatient2@gmail.com",
   "address": "address from api",
-  "dateOfBirth": "1995-09-09"
+  "dateOfBirth": "2025-10-27"
 }
 
 ###

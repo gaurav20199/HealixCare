@@ -68,7 +68,7 @@ public class PatientService {
 
         billingServiceGrpcClient.createBillingAccount(patient.getUuid().toString(), patient.getName(), patient.getEmail());
 
-        kafkaEventProducer.sendEvent(patient);
+        kafkaEventProducer.sendPatientEvent(patient,false);
 
         return patientDTOMapper.toDto(patient);
     }
@@ -92,6 +92,8 @@ public class PatientService {
         patient.setDateOfBirth(LocalDate.parse(patientRequestDTO.getDateOfBirth()));
 
         Patient updatedPatient = patientRepository.save(patient);
+        kafkaEventProducer.sendPatientEvent(updatedPatient,true);
+
         return patientDTOMapper.toDto(updatedPatient);
     }
 

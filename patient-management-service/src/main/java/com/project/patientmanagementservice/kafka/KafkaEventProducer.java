@@ -17,14 +17,17 @@ public class KafkaEventProducer {
     private static final Logger log = LoggerFactory.getLogger(KafkaEventProducer.class);
     private final KafkaTemplate<String,byte[]> kafkaTemplate;
 
-    public void sendEvent(Patient patient){
+    public void sendPatientEvent(Patient patient,boolean isModificationEvent){
+        log.info("Sending patient event to kafka");
         PatientEvent patientEvent = PatientEvent.newBuilder().
                                                 setPatientId(patient.getUuid().toString()).
                                                 setEmail(patient.getEmail()).
                                                 setName(patient.getName()).
-                                                setEventType(EventType.PATIENT_CREATED.toString()).build();
+                                                setEventType(isModificationEvent?EventType.PATIENT_UPDATED.toString():
+                                                        EventType.PATIENT_CREATED.toString()).build();
         try {
             kafkaTemplate.send("patient",patientEvent.toByteArray());
+            log.info("Sent patient event to kafka");
         }catch (Exception e){
             log.error("Error sending event",e);
             log.error("Error occurred for event",patientEvent);

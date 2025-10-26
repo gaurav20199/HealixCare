@@ -4,11 +4,11 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "name": "circuit-breaker-test3",
-  "email": "circuit-breaker-test3@gmail.com",
+  "name": "patient-appointment-test",
+  "email": "patient-appointment-test1@gmail.com",
   "address": "123 Main Street",
   "dateOfBirth": "1995-09-09",
-  "registeredDate": "2025-09-09" 
+  "registeredDate": "2025-10-27"
 }
 
 ###
